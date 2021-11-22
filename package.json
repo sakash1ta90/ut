@@ -1,0 +1,16 @@
+{
+  "name": "ut",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "uma": "node ut.js {email@address.sample.com} {password} {date}",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^11.0.0"
+  }
+}
