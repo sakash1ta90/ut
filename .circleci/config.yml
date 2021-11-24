@@ -11,7 +11,7 @@ jobs:
           command: npm i puppeteer
       - run: 
           name: run test
-          command: node response.js
+          command: node ut.js $userID $password $targetDate $code
 
 workflows:
   Puppeteer Test:
