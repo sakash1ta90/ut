@@ -7,7 +7,7 @@ const formatDate = (dt) => {
   var d = ('00' + dt.getDate()).slice(-2);
   return y + m + d;
 };
-const argDate = formatDate(new Date(process.argv[4]));
+const argDate = formatDate(new Date(process.env.targetDate || process.argv[4]));
 
 // リンク用数値
 const targetTokyo = 5; // 東京
@@ -15,11 +15,11 @@ const targetHanshin = 9; // 阪神
 
 (async () => {
   // debug
-  // const browser = await puppeteer.launch({
-  //   headless: false,
-  //   slowMo: 1, // slow down by 250ms
-  // });
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: false,
+    slowMo: 25, // slow down by 250ms
+  });
+  // const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.setViewport({
     width: 1200,
@@ -32,8 +32,8 @@ const targetHanshin = 9; // 阪神
       '--window-size=1200,1000',
     ]
   });
-  await page.type('#userid', process.argv[2])
-  await page.type('#passwd', process.argv[3])
+  await page.type('#userid', process.env.userID || process.argv[2])
+  await page.type('#passwd', process.env.password || process.argv[3])
 
   await page.click('a#btn_login'),
   await page.waitForTimeout(1500)
@@ -105,7 +105,7 @@ const targetHanshin = 9; // 阪神
   await page.click('#agree')
 
   // クレジットカードセキュリティコード
-  await page.type('#id_old_security_code', process.argv[5])
+  await page.type('#id_old_security_code', process.env.code || process.argv[5])
 
   // 範囲外ダミークリック
   await page.click('#nts102_form > div:nth-child(14) > div > p:nth-child(2) > label')
