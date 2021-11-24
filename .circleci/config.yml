@@ -10,7 +10,6 @@ jobs:
           keys:
             - npm-{{ checksum "package.json" }}
       - run: npm i
-      - run: echo $targetDate
       - run: node ut.js $userID $password $targetDate $code
 workflows:
   version: 2
