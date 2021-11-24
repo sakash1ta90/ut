@@ -18,13 +18,13 @@ const targetHanshin = 9; // 阪神
   const browser = await puppeteer.launch({
     headless: false,
     slowMo: 25, // slow down by 250ms
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
   // const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.setViewport({
     width: 1200,
     height: 1500,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   })
   await page.goto('https://jra.flpjp.com/', {
     waitUntil: 'load',
