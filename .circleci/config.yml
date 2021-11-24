@@ -1,18 +1,20 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
 jobs:
-  deploy:
+  test:
     docker:
-      - image: circleci/node:15.8.0
+      - image: circleci/node:latest-browsers
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - npm-{{ checksum "package.json" }}
-      - run: npm i
-      - run: node ut.js $userID $password $targetDate $code
+      - run: 
+          name: install puppeteer
+          command: npm i puppeteer
+      - run: 
+          name: run test
+          command: node response.js
+
 workflows:
-  version: 2
-  build-deploy:
+  Puppeteer Test:
     jobs:
-      - deploy
+    - test
+  version: 2
