@@ -24,6 +24,7 @@ const targetHanshin = 9; // 阪神
   await page.setViewport({
     width: 1200,
     height: 1500,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   })
   await page.goto('https://jra.flpjp.com/', {
     waitUntil: 'load',
