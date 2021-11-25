@@ -35,9 +35,11 @@ const targetHanshin = 9; // 阪神
   });
   // 5秒待機
   await page.waitForTimeout(5000)
+  // ログイン項目入力
   await page.type('#userid', process.env.userID || process.argv[2])
   await page.type('#passwd', process.env.password || process.argv[3])
 
+  // ログインボタン
   await page.click('a#btn_login'),
   await page.waitForTimeout(1500)
   // 上記内容を確認しました
@@ -46,11 +48,6 @@ const targetHanshin = 9; // 阪神
   await page.click('#attention_button_0')
   await page.waitForTimeout(500)
   await page.screenshot({ path: 'example2.png' });
-  // URLがリンクであることを取得する
-  // const srcs = await page.$$('#calmonth_1 > table a', imgs => imgs.map((a) => {
-  //   console.debug(a.src)
-  //   return a.src
-  // }));
   // console.debug(srcs)
 
   // 満席チェック
@@ -66,28 +63,36 @@ const targetHanshin = 9; // 阪神
     timeout: 0
   });
   await page.waitForTimeout(500)
-  // 上記内容を確認しました
-  await page.click('div.attention-agree-checkbox > label > input[type="checkbox"]')
-  // 次へ進む
-  await page.click('#attention_button_1')
-  // おまかせ席選択で購入する
-  await page.click('#p03A_auto_open')
 
-  // ページ最下部までスクロール
-  await page.evaluate(() => {
-    document.scrollingElement.scrollTop = document.body.scrollHeight
-  })
-  await page.screenshot({ path: 'example3.png' });
+  let count = 0
+  let links = {}
+  do {
+    if (count > 5) {
+      break
+    }
+    if (count > 0) {
+      await page.reload()
+      await page.waitForTimeout(1000)
+    }
+    // 上記内容を確認しました
+    await page.click('div.attention-agree-checkbox > label > input[type="checkbox"]')
+    // 次へ進む
+    await page.click('#attention_button_1')
+    // おまかせ席選択で購入する
+    await page.click('#p03A_auto_open')
 
+    // ページ最下部までスクロール
+    await page.evaluate(() => {
+      document.scrollingElement.scrollTop = document.body.scrollHeight
+    })
+    await page.screenshot({ path: 'example3.png' });
+
+    links = await page.$$eval('a.ticket_auto_link', list => list.map(item => item.outerHTML).filter(item => item.includes('ticketprice="500"')));
+    count++
+  } while (links.length > 0)
 
   // 500円のチケットを自動仮押さえ
-  // @TODO 動的に選択する
-  await page.click('a.ticket_auto_link')
-  const links = await page.$$eval('a.ticket_auto_link', list => {
-    console.debug(list.ticketprice)
-    return list.map(item => item.innerHTML)
-  });
-  console.debug(links)
+   await page.click('a.ticket_auto_link')
 
   // 選択した席種を「検討中の座席」に追加しました。
   await page.click('.ajs-button')
