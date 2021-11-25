@@ -33,8 +33,8 @@ const targetHanshin = 9; // 阪神
       '--window-size=1200,1000',
     ]
   });
-  // 15秒待機
-  await page.waitForTimeout(15000)
+  // 5秒待機
+  await page.waitForTimeout(5000)
   await page.type('#userid', process.env.userID || process.argv[2])
   await page.type('#passwd', process.env.password || process.argv[3])
 
