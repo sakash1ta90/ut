@@ -33,8 +33,8 @@ const targetHanshin = 9; // 阪神
       '--window-size=1200,1000',
     ]
   });
-  // 5秒待機
-  // await page.waitForTimeout(5000)
+  // 15秒待機
+  await page.waitForTimeout(15000)
   // ログイン項目入力
   await page.type('#userid', process.env.userID || process.argv[2])
   await page.type('#passwd', process.env.password || process.argv[3])
@@ -43,7 +43,7 @@ const targetHanshin = 9; // 阪神
   await page.click('a#btn_login'),
   await page.waitForTimeout(1500)
   // 上記内容を確認しました
-  await page.click('#attention_window_notice > div.attention-agree-checkbox > label > input[type="checkbox"]')
+  await page.click('#attention_window_notice > div.attention-agree-checkbox > label > input[type="checkbox"]') // @TODO
   // 次へ進む
   await page.click('#attention_button_0')
   await page.waitForTimeout(500)
