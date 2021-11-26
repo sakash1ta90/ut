@@ -69,6 +69,7 @@ const targetHanshin = 9; // 阪神
   let count = 0
   let links = {}
   do {
+    console.log(`座席探し${count}回目`)
     if (count > 5) {
       break
     }
