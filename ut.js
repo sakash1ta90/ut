@@ -36,6 +36,7 @@ const targetHanshin = 9; // 阪神
   // 15秒待機
   await page.waitForTimeout(15000)
   // ログイン項目入力
+  console.log('ログイン')
   await page.type('#userid', process.env.userID || process.argv[2])
   await page.type('#passwd', process.env.password || process.argv[3])
 
@@ -50,6 +51,7 @@ const targetHanshin = 9; // 阪神
   await page.screenshot({ path: 'example2.png' });
   // console.debug(srcs)
 
+  console.log('座席画面なう')
   // 満席チェック
   const url = `https://jra.flpjp.com/seatSelect/${argDate}_${targetTokyo}`
   // if (!hrefs.includes(url)) {
@@ -91,6 +93,7 @@ const targetHanshin = 9; // 阪神
     count++
   } while (links.length > 0)
 
+  console.log('座席仮押さえなう')
   // 500円のチケットを自動仮押さえ
    await page.click('a.ticket_auto_link')
 
@@ -102,6 +105,7 @@ const targetHanshin = 9; // 阪神
   await page.waitForTimeout(2000)
   await page.screenshot({ path: 'example3_2.png' });
   // 次のステップに進む(会員情報の入力に進む)
+  console.log('会員情報の入力に進むなう')
   await page.click('#need_attention')
   await page.waitForTimeout(500)
   // 上記内容を確認しました
@@ -112,6 +116,7 @@ const targetHanshin = 9; // 阪神
   // 個人情報保護方針に同意するチェックボックス
   await page.click('#agree')
 
+  console.log('クレカの入力なう')
   // クレジットカードセキュリティコード
   await page.type('#id_old_security_code', process.env.code || process.argv[5])
 
@@ -135,6 +140,7 @@ const targetHanshin = 9; // 阪神
   // 確定する
   await page.click('#nts006_buy')
   await page.waitForTimeout(3000)
+  console.log('完了')
   await page.screenshot({ path: 'example5.png' })
   await browser.close();
 })();

@@ -10,7 +10,10 @@ jobs:
           name: install puppeteer
           command: npm i puppeteer
       - run: 
-          name: run test
+          name: run test1
+          command: node ut.js $userID $password $targetDate $code
+      - run: 
+          name: run test2
           command: node ut.js $userID $password $targetDate $code
 
 workflows:
